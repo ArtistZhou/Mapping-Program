@@ -9,15 +9,14 @@ public class Edge {
 	public Edge(Node o, Node d) {
 		this.origin = o;
 		this.dest = d;
-		
 		this.weight = distance(o.lat, o.lon, d.lat, d.lon);
 		
 	}
 	
+	
 	//find distance between two edges
 	// the following code for the Haversin Functon is taken from: 
 	// https://github.com/jasonwinn/haversine/blob/master/Haversine.java
-	
 	private static final int EARTH_RADIUS = 6371; // Approx Earth radius in KM
 	
 	private static double distance(double startLat, double startLong,

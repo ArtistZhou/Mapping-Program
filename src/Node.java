@@ -1,3 +1,4 @@
+import java.util.HashSet;
 
 public class Node {
 	
@@ -5,6 +6,7 @@ public class Node {
 	Double lat;
 	Double lon;
 	
+	HashSet<Edge> edgeList;
 	
 	//constructor
 	public Node() {
