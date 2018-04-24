@@ -8,4 +8,3 @@ Shagun Bose . 181
 
 Compile and Run Instructions
 
-Akira
