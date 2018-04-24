@@ -10,7 +10,9 @@ public class Node {
 	HashSet<Edge> edgeList;
 	
 	//constructor
-	public Node() {
-		
+	public Node(String id, Double lat, Double lon) {
+		this.id = id;
+		this.lat = lat;
+		this.lon = lon;
 	}
 }

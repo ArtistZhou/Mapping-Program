@@ -9,13 +9,14 @@ public class Graph extends JPanel {
 	
 	//constructor
 	public Graph() {
-		
+		vertices = new HashSet<Node>();
 	}
 	
 	void addIntersection(String id, double lat, double lon) {
 		//create Node with ID = id; latitude and longitude
-	
 		//add Node to HashSet
+		vertices.add(new Node(id, lat, lon));
+		
 		
 	}
 	
