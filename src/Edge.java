@@ -10,7 +10,6 @@ public class Edge {
 		this.origin = o;
 		this.dest = d;
 		this.weight = distance(o.lat, o.lon, d.lat, d.lon);
-		
 	}
 	
 	

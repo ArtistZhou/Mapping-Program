@@ -6,6 +6,7 @@ public class Node {
 	Double lat;
 	Double lon;
 	
+	//stores the edges that 
 	HashSet<Edge> edgeList;
 	
 	//constructor

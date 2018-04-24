@@ -40,5 +40,9 @@ public class Graph extends JPanel {
 		//if the shortest path is known, show that too
 	}
 	
+	public static void main (String[] args) {
+		//take terminal arguments 
+		
+	}
 	
 }
