@@ -1,12 +1,13 @@
 
 public class Edge {
-	
+	String id;
 	Node origin;
 	Node dest;
 	double weight;
 
 	//constructor
-	public Edge(Node o, Node d) {
+	public Edge(String id, Node o, Node d) {
+		this.id = id;
 		this.origin = o;
 		this.dest = d;
 		this.weight = distance(o.lat, o.lon, d.lat, d.lon);

@@ -1,6 +1,11 @@
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.StringTokenizer;
 
 public class Graph {
 	// Store list of vertices in a hash set to prevent duplicates
@@ -11,6 +16,37 @@ public class Graph {
 		vertices = new HashSet<Node>();
 	}
 
+	// construct a graph from a text file
+	public Graph(String filename) {
+		vertices = new HashSet<Node>();
+		try {
+			BufferedReader reader = new BufferedReader(new FileReader(filename));
+			String line;
+			String type;
+			StringTokenizer tokenizer;
+			while ((line = reader.readLine()) != null) {
+				tokenizer = new StringTokenizer(line, " ");
+				type = tokenizer.nextToken();
+				if (type.equals("i")) {
+					this.addIntersection(tokenizer.nextToken(), Double.parseDouble(tokenizer.nextToken()),
+							Double.parseDouble(tokenizer.nextToken()));
+				} else if (type.equals("r")) {
+					this.addEdge(tokenizer.nextToken(), tokenizer.nextToken(), tokenizer.nextToken());
+				}
+			}
+			reader.close();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NumberFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
 	void addIntersection(String id, double lat, double lon) {
 		// create Node with ID = id; latitude and longitude
 		// add Node to HashSet
@@ -18,7 +54,7 @@ public class Graph {
 	}
 
 	// add edge between node a and node b
-	void addEdge(String a, String b) {
+	void addEdge(String id, String a, String b) {
 		Node anode = null;
 		Node bnode = null;
 		// iterate through vertices looking for corresponding nodes
@@ -40,8 +76,8 @@ public class Graph {
 			return;
 		}
 		// create edges on both nodes and add them to each edgeList
-		Edge ab = new Edge(anode, bnode);
-		Edge ba = new Edge(bnode, anode);
+		Edge ab = new Edge(id, anode, bnode);
+		Edge ba = new Edge(id, bnode, anode);
 		anode.edgeList.add(ab);
 		bnode.edgeList.add(ba);
 		// test distance calculating method
@@ -55,12 +91,13 @@ public class Graph {
 		Node endnode = null;
 		CustomPQ<Node> queue = new CustomPQ<Node>();
 		LinkedList<Node> returnlist = null;
-		// iterate through vertices looking for corresponding nodes, update info, and add nodes to queue
+		// iterate through vertices looking for corresponding nodes, update info, and
+		// add nodes to queue
 		for (Node n : vertices) {
-			if (n.id.equals(start)) {
+			if (n.id.equals(end)) {
 				endnode = n;
 			}
-			if (n.id.equals(end)) {
+			if (n.id.equals(start)) {
 				n.remember(true);
 				startnode = n;
 			} else {
@@ -77,7 +114,8 @@ public class Graph {
 			System.out.println(end + " does not exist on the graph");
 			return null;
 		}
-		//iterate through all nodes from closest to farthest, and update info of each adjacent node if necessary
+		// iterate through all nodes from closest to farthest, and update info of each
+		// adjacent node if necessary
 		while (!queue.isEmpty()) {
 			Node current = queue.poll();
 			for (Edge e : current.edgeList) {
@@ -88,10 +126,10 @@ public class Graph {
 			}
 		}
 		if (endnode.info.dist == Double.MAX_VALUE) {
-			//clause for the case that b is not connected to a
+			// clause for the case that b is not connected to a
 			System.out.println(start + " is not connected to " + end);
 		} else {
-			//if connected, iterate through prev starting from b and build the list
+			// if connected, iterate through prev starting from b and build the list
 			returnlist = new LinkedList<Node>();
 			Node ptr = endnode;
 			while (ptr != null) {
@@ -99,11 +137,10 @@ public class Graph {
 				ptr = ptr.info.prev;
 			}
 		}
-		for(Node n: vertices) {
+		for (Node n : vertices) {
 			// just for formality. Clearing info
 			n.forget();
 		}
 		return returnlist;
 	}
-
 }

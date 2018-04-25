@@ -8,6 +8,5 @@ public class Canvas extends JPanel{
 
 	public static void main(String[] args) {
 		// take terminal arguments
-
 	}
 }
