@@ -16,19 +16,38 @@ public class Graph extends JPanel {
 		//create Node with ID = id; latitude and longitude
 		//add Node to HashSet
 		vertices.add(new Node(id, lat, lon));
-		
-		
 	}
 	
 	//add edge between node a and node b
 	void addEdge(String a, String b){
-		//find Node a and Node b in HashSet
-		
-		//create edge between two Nodes. UNDIRECTED Graph 
-		Edge e = null;
-		
+		Node anode = null;
+		Node bnode = null;
+		//iterate through vertices looking for corresponding nodes
+		for(Node n: vertices) {
+			if(n.id.equals(a)) {
+				anode = n;
+			}
+			if(n.id.equals(b)) {
+				bnode = n;
+			}
+		}
+		//handle cases when nodes aren't on the graph
+		if(anode==null) {
+			System.out.println(a + " does not exist on the graph");
+			return;
+		}
+		if(bnode==null) {
+			System.out.println(b + " does not exist on the graph");
+			return;
+		}
+		//create edges on both nodes and add them to each edgeList 
+		Edge ab = new Edge(anode, bnode);
+		Edge ba = new Edge(bnode, anode);
+		anode.edgeList.add(ab);
+		bnode.edgeList.add(ba);
 		//test distance calculating method
-		System.out.println(e.weight);
+		System.out.println("Distance from vertex " + a + " to " + b + " is " + ab.weight);
+		System.out.println("Distance from vertex " + b + " to " + a + " is " + ba.weight);
 	}
 	
 	//shortest path

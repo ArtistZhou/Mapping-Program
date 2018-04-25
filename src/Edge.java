@@ -13,7 +13,7 @@ public class Edge {
 	}
 	
 	
-	//find distance between two edges
+	//find distance between two edges (in meters)
 	// the following code for the Haversin Functon is taken from: 
 	// https://github.com/jasonwinn/haversine/blob/master/Haversine.java
 	private static final int EARTH_RADIUS = 6371; // Approx Earth radius in KM
@@ -30,7 +30,8 @@ public class Edge {
 		double a = haversin(dLat) + Math.cos(startLat) * Math.cos(endLat) * haversin(dLong);
 		double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 
-		return EARTH_RADIUS * c; // <-- d
+		return EARTH_RADIUS * c*1000; // <-- d
+		//returns distance in meters
 	}
 	
 	private static double haversin(double val) {
