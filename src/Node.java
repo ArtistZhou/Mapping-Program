@@ -16,6 +16,7 @@ public class Node implements Comparable<Node> {
 		this.lat = lat;
 		this.lon = lon;
 		this.info = null;
+		edgeList = new HashSet<Edge>();
 	}
 	
 	//creates new instance of info
@@ -26,6 +27,10 @@ public class Node implements Comparable<Node> {
 	//removes the instance of info (after the use of info is done)
 	public void forget() {
 		this.info = null;
+	}
+	
+	public String toString() {
+		return id;
 	}
 
 	@Override
@@ -56,9 +61,9 @@ public class Node implements Comparable<Node> {
 			}
 		}
 
-		public void update(Node prev, Edge workingEdge) {
-			this.prev = prev;
-			this.dist = prev.info.dist + workingEdge.weight;
+		public void update(Node newprev, Edge workingEdge) {
+			this.prev = newprev;
+			this.dist = newprev.info.dist + workingEdge.weight;
 		}
 	}
 }

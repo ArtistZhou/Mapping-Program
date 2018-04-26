@@ -2,14 +2,15 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.HashSet;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.PriorityQueue;
 import java.util.StringTokenizer;
 
 public class Graph {
 	// Store list of vertices in a hash set to prevent duplicates
-	HashSet<Node> vertices;
+	HashMap<String, Node> vertices;
 	//max lat and max lon will be useful for painting the graph later
 	double maxlat;
 	double minlat;
@@ -17,14 +18,14 @@ public class Graph {
 	double minlon;
 	// constructor
 	public Graph() {
-		vertices = new HashSet<Node>();
+		vertices = new HashMap<String, Node>();
 		maxlat = maxlon = Double.MIN_VALUE;
 		minlat = minlon - Double.MAX_VALUE;
 	}
 
 	// construct a graph from a text file
 	public Graph(String filename) {
-		vertices = new HashSet<Node>();
+		vertices = new HashMap<String, Node>();
 		maxlat = maxlon = Double.MIN_VALUE;
 		minlat = minlon - Double.MAX_VALUE;
 		try {
@@ -33,7 +34,7 @@ public class Graph {
 			String type;
 			StringTokenizer tokenizer;
 			while ((line = reader.readLine()) != null) {
-				tokenizer = new StringTokenizer(line, " ");
+				tokenizer = new StringTokenizer(line, "\t");
 				type = tokenizer.nextToken();
 				if (type.equals("i")) {
 					this.addIntersection(tokenizer.nextToken(), Double.parseDouble(tokenizer.nextToken()),
@@ -58,7 +59,7 @@ public class Graph {
 	void addIntersection(String id, double lat, double lon) {
 		// create Node with ID = id; latitude and longitude
 		// add Node to HashSet
-		vertices.add(new Node(id, lat, lon));
+		vertices.put(id, new Node(id, lat, lon));
 		//keeping track of max and min lat and lon
 		if(lat>maxlat) {
 			maxlat = lat;
@@ -74,17 +75,8 @@ public class Graph {
 
 	// add edge between node a and node b
 	void addEdge(String id, String a, String b) {
-		Node anode = null;
-		Node bnode = null;
-		// iterate through vertices looking for corresponding nodes
-		for (Node n : vertices) {
-			if (n.id.equals(a)) {
-				anode = n;
-			}
-			if (n.id.equals(b)) {
-				bnode = n;
-			}
-		}
+		Node anode = vertices.get(a);
+		Node bnode = vertices.get(b);
 		// handle cases when nodes aren't on the graph
 		if (anode == null) {
 			System.out.println(a + " does not exist on the graph");
@@ -95,30 +87,23 @@ public class Graph {
 			return;
 		}
 		// create edges on both nodes and add them to each edgeList
-		Edge ab = new Edge(id, anode, bnode);
-		Edge ba = new Edge(id, bnode, anode);
-		anode.edgeList.add(ab);
-		bnode.edgeList.add(ba);
+		anode.edgeList.add(new Edge(id, anode, bnode));
+		bnode.edgeList.add(new Edge(id, bnode, anode));
 		// test distance calculating method
-		System.out.println("Distance from vertex " + a + " to " + b + " is " + ab.weight);
-		System.out.println("Distance from vertex " + b + " to " + a + " is " + ba.weight);
 	}
 
 	// shortest path
 	List<Node> shortestPath(String start, String end) {
-		Node startnode = null;
-		Node endnode = null;
-		CustomPQ<Node> queue = new CustomPQ<Node>();
-		LinkedList<Node> returnlist = null;
+		Node startnode = vertices.get(start);
+		Node endnode = vertices.get(end);
+		PriorityQueue<Node> queue = new PriorityQueue<Node>();
+		LinkedList<Node> returnlist = new LinkedList<Node>();
 		// iterate through vertices looking for corresponding nodes, update info, and
 		// add nodes to queue
-		for (Node n : vertices) {
-			if (n.id.equals(end)) {
-				endnode = n;
-			}
+		for (String s : vertices.keySet()) {
+			Node n = vertices.get(s);
 			if (n.id.equals(start)) {
 				n.remember(true);
-				startnode = n;
 			} else {
 				n.remember(false);
 			}
@@ -127,11 +112,11 @@ public class Graph {
 		// handle cases when nodes aren't on the graph
 		if (startnode == null) {
 			System.out.println(start + " does not exist on the graph");
-			return null;
+			return returnlist;
 		}
 		if (endnode == null) {
 			System.out.println(end + " does not exist on the graph");
-			return null;
+			return returnlist;
 		}
 		// iterate through all nodes from closest to farthest, and update info of each
 		// adjacent node if necessary
@@ -140,7 +125,7 @@ public class Graph {
 			for (Edge e : current.edgeList) {
 				if (current.info.dist + e.weight < e.dest.info.dist) {
 					e.dest.info.update(current, e);
-					queue.update();
+					queue.add(queue.poll());
 				}
 			}
 		}
@@ -149,16 +134,15 @@ public class Graph {
 			System.out.println(start + " is not connected to " + end);
 		} else {
 			// if connected, iterate through prev starting from b and build the list
-			returnlist = new LinkedList<Node>();
 			Node ptr = endnode;
 			while (ptr != null) {
 				returnlist.addFirst(ptr);
 				ptr = ptr.info.prev;
 			}
 		}
-		for (Node n : vertices) {
+		for (String s : vertices.keySet()) {
 			// just for formality. Clearing info
-			n.forget();
+			vertices.get(s).forget();
 		}
 		return returnlist;
 	}
