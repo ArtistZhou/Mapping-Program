@@ -36,26 +36,26 @@ public class Node implements Comparable<Node> {
 	@Override
 	public int compareTo(Node n) {
 		//if either one of the node is lacking info, then it has no dist, so there is no point in comparing
-		if (this.info == null || n.info == null) {
+		if (this.info == null || n.info == null||this.info.dist == n.info.dist) {
 			return 0;
 		}
 		if (this.info.dist < n.info.dist) {
 			return -1;
-		} else if(this.info.dist == n.info.dist){
-			return 0;
 		}else {
-			return -1;
+			return 1;
 		}
 	}
 	
 	// a collection of information that the node must store when using Dijkstra's Algorithm
 	public static class Information {
+		boolean visit;
 		Node prev;
 		double dist;
 		
 		// the starting vertex must have a distance of 0 for the whole thing to work
 		public Information(boolean start) {
 			prev = null;
+			visit = false;
 			if (start) {
 				dist = 0;
 			} else {
@@ -66,6 +66,9 @@ public class Node implements Comparable<Node> {
 		public void update(Node newprev, Edge workingEdge) {
 			this.prev = newprev;
 			this.dist = newprev.info.dist + workingEdge.weight;
+		}
+		public void visit() {
+			visit = true;
 		}
 		public String toString() {
 			String info;

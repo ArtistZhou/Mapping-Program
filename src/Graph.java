@@ -105,10 +105,10 @@ public class Graph {
 			Node n = vertices.get(s);
 			if (s.equals(start)) {
 				n.remember(true);
+				queue.add(n);
 			} else {
 				n.remember(false);
 			}
-			queue.add(n);
 		}
 		// handle cases when nodes aren't on the graph
 		if (startnode == null) {
@@ -126,8 +126,10 @@ public class Graph {
 			for (Edge e : current.edgeList) {
 				if (current.info.dist + e.weight < e.dest.info.dist) {
 					e.dest.info.update(current, e);
-					queue.remove(e.dest);
-					queue.add(e.dest);
+					if(!e.dest.info.visit) {
+						e.dest.info.visit();
+						queue.add(e.dest);
+					}
 				}
 			}
 		}
