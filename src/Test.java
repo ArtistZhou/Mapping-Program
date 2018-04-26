@@ -1,5 +1,7 @@
 import java.util.List;
 
+import javax.swing.JFrame;
+
 public class Test {
 	static double length = 500;
 	static double width = 500;
@@ -15,6 +17,15 @@ public class Test {
 		for (Node node : n) {
 			System.out.println(node.lat + " " + node.lon);
 		}
+		
+		//to draw graph
+		JFrame frame = new JFrame();
+		Canvas can = new Canvas(g);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setSize(500, 500);
+		frame.setResizable(true);
+		frame.add(can);
+		frame.setVisible(true);
 	}
 	public static double generateX(Graph g, Node n) {
 		return ((n.lon-g.minlon)/(g.maxlon - g.minlon)*width);

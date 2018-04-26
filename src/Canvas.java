@@ -9,9 +9,11 @@ public class Canvas extends JPanel {
 	final static double offset = 0.05;
 	static double length = 500;
 	static double width = 500;
+	Graph g;
 	
 	//main class has a JFrame that adds this canvas
-	public Canvas() {
+	public Canvas(Graph g) {
+		this.g = g;
 		repaint();
 	}
 
@@ -19,16 +21,6 @@ public class Canvas extends JPanel {
 	public void show() {
 		repaint();
 		// if the shortest path is known, show that too
-	}
-
-	public static void main(String[] args) {
-	JFrame frame = new JFrame();
-	Canvas can = new Canvas();
-	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	frame.setSize(500, 500);
-	frame.setResizable(true);
-	frame.add(can);
-	frame.setVisible(true);
 	}
 
 	public static double generateX(Graph g, Node n) {
@@ -42,6 +34,9 @@ public class Canvas extends JPanel {
 	
 	@Override
 	public void paintComponent(Graphics g) {
-		g.drawLine(0, 20, 20, 30);
+		//for each intersection in list of vertices in graph
+		
+		//draw line from that vertex to each neighbour
+	
 	}
 }
