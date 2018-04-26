@@ -27,12 +27,5 @@ public class Test {
 		frame.add(can);
 		frame.setVisible(true);
 	}
-	public static double generateX(Graph g, Node n) {
-		return ((n.lon-g.minlon)/(g.maxlon - g.minlon)*width);
-	}
-
-	public static double generateY(Graph g, Node n) {
-		return ((n.lat-g.minlat)/(g.maxlat - g.minlat)*length);
-	}
 	
 }
