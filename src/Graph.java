@@ -3,7 +3,6 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.PriorityQueue;
@@ -98,7 +97,7 @@ public class Graph {
 		Node startnode = vertices.get(start);
 		Node endnode = vertices.get(end);
 		PriorityQueue<Node> queue = new PriorityQueue<Node>();
-		LinkedList<Node> returnlist = null;
+		LinkedList<Node> returnlist = new LinkedList<Node>();
 		// iterate through vertices looking for corresponding nodes, update info, and
 		// add nodes to queue
 		for (String s : vertices.keySet()) {
@@ -113,11 +112,11 @@ public class Graph {
 		// handle cases when nodes aren't on the graph
 		if (startnode == null) {
 			System.out.println(start + " does not exist on the graph");
-			return null;
+			return returnlist;
 		}
 		if (endnode == null) {
 			System.out.println(end + " does not exist on the graph");
-			return null;
+			return returnlist;
 		}
 		// iterate through all nodes from closest to farthest, and update info of each
 		// adjacent node if necessary
@@ -135,7 +134,6 @@ public class Graph {
 			System.out.println(start + " is not connected to " + end);
 		} else {
 			// if connected, iterate through prev starting from b and build the list
-			returnlist = new LinkedList<Node>();
 			Node ptr = endnode;
 			while (ptr != null) {
 				returnlist.addFirst(ptr);
