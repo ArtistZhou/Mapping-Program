@@ -1,4 +1,5 @@
 import java.util.HashSet;
+import java.util.List;
 
 public class Node implements Comparable<Node> {
 
@@ -27,6 +28,19 @@ public class Node implements Comparable<Node> {
 	//removes the instance of info (after the use of info is done)
 	public void forget() {
 		this.info = null;
+	}
+	
+	static public double pathlength(List<Node> list) {
+		double returnnum = 0;
+		for(int i = 0; i<list.size()-1; i++) {
+			for(Edge edge: list.get(i).edgeList) {
+				if(edge.dest.equals(list.get(i+1))) {
+					returnnum += edge.weight;
+					break;
+				}
+			}
+		}
+		return returnnum;
 	}
 	
 	public String toString() {
