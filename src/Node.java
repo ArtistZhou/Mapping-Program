@@ -56,12 +56,13 @@ public class Node implements Comparable<Node> {
 		// the starting vertex must have a distance of 0 for the whole thing to work
 		public Information(boolean start) {
 			prev = null;
-			willvisit = false;
 			visited  = false;
 			if (start) {
 				dist = 0;
+				willvisit = true;
 			} else {
 				dist = Integer.MAX_VALUE;
+				willvisit = false;
 			}
 		}
 
