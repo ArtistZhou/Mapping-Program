@@ -148,5 +148,14 @@ public class Graph {
 		}
 		return returnlist;
 	}
+	public static void main(String[] args) {
+		Graph g = new Graph("ur.txt");
+		System.out.println("done making graph");
+		System.out.println("Latitude ranges from " + g.minlat + " to " + g.maxlat);
+		System.out.println("Longitude ranges from " + g.minlon + " to " + g.maxlon);
+		List<Node> list = g.shortestPath("RUSH-RHEES", "LOVEJOY");
+		System.out.println("done finding shortest path");
+		System.out.println(Node.pathlength(list));
+	}
    
 }
