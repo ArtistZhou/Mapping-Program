@@ -48,14 +48,16 @@ public class Node implements Comparable<Node> {
 	
 	// a collection of information that the node must store when using Dijkstra's Algorithm
 	public static class Information {
-		boolean visit;
+		boolean willvisit;
+		boolean visited;
 		Node prev;
 		double dist;
 		
 		// the starting vertex must have a distance of 0 for the whole thing to work
 		public Information(boolean start) {
 			prev = null;
-			visit = false;
+			willvisit = false;
+			visited  = false;
 			if (start) {
 				dist = 0;
 			} else {
@@ -67,8 +69,11 @@ public class Node implements Comparable<Node> {
 			this.prev = newprev;
 			this.dist = newprev.info.dist + workingEdge.weight;
 		}
-		public void visit() {
-			visit = true;
+		public void willvisit() {
+			willvisit = true;
+		}
+		public void visited() {
+			visited = true;
 		}
 		public String toString() {
 			String info;
