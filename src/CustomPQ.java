@@ -22,7 +22,8 @@ public class CustomPQ<T extends Comparable<T>> {
 	}
 
 	T poll() {
-		T returnelement = array.remove(0);
+		swap(0, array.size()-1);
+		T returnelement = array.remove(array.size()-1);
 		update();
 		return returnelement;
 	}
