@@ -6,14 +6,14 @@ import java.awt.Graphics;
 import java.util.List;
 
 public class Canvas extends JPanel {
-	final static double offset = 0.05;
-	static double length = 500;
-	static double width = 500;
-	Graph g;
+	final static double offset = 0.05; //boundary of map
+	static double length;
+	static double width;
+	Graph graph;
 	
 	//main class has a JFrame that adds this canvas
 	public Canvas(Graph g) {
-		this.g = g;
+		this.graph = g;
 		repaint();
 	}
 
@@ -23,19 +23,33 @@ public class Canvas extends JPanel {
 		// if the shortest path is known, show that too
 	}
 
-	public static double generateX(Graph g, Node n) {
-		return ((n.lon-g.minlon)/(g.maxlon - g.minlon)*width);
+	public double generateX(Node n) {
+		return ((n.lon-graph.minlon)/(graph.maxlon - graph.minlon)*width);
 	}	
 
-	public static double generateY(Graph g, Node n) {
-		return ((n.lat-g.minlat)/(g.maxlat - g.minlat)*length);
+	public double generateY(Node n) {
+		return (length - (n.lat-graph.minlat)/(graph.maxlat - graph.minlat)*length);
 	}
 
 	
 	@Override
 	public void paintComponent(Graphics g) {
-		//for each intersection in list of vertices in graph
+		length = getHeight();
+		width = getWidth();
 		
+		//for each intersection in list of vertices in graph
+		for(String s: graph.vertices.keySet()) {
+			Node node = graph.vertices.get(s);
+			int x1 = (int)generateX(node);
+			int y1 = (int)generateY(node);
+			
+			for(Edge adj : node.edgeList) {
+				Node destination = adj.dest;
+				int x2 = (int)generateX(destination);
+				int y2 = (int)generateY(destination);
+				g.drawLine(x1, y1, x2, y2);
+			}
+		}
 		//draw line from that vertex to each neighbour
 	
 	}
