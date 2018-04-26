@@ -14,6 +14,7 @@ public class Canvas extends JPanel {
 	//main class has a JFrame that adds this canvas
 	public Canvas(Graph g) {
 		this.graph = g;
+		
 		repaint();
 	}
 
@@ -34,8 +35,10 @@ public class Canvas extends JPanel {
 	
 	@Override
 	public void paintComponent(Graphics g) {
+		double ratio = (graph.maxlat - graph.minlat)/(graph.maxlon - graph.minlon);
 		length = getHeight();
 		width = getWidth();
+		int count = 0;
 		
 		//for each intersection in list of vertices in graph
 		for(String s: graph.vertices.keySet()) {
@@ -48,8 +51,11 @@ public class Canvas extends JPanel {
 				int x2 = (int)generateX(destination);
 				int y2 = (int)generateY(destination);
 				g.drawLine(x1, y1, x2, y2);
+				count ++;
 			}
 		}
+		
+		//System.out.println("\n drew " + count + " edges, vertices = " + graph.vertices.size());
 		//draw line from that vertex to each neighbour
 	
 	}
