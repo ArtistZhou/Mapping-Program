@@ -10,15 +10,23 @@ import java.util.StringTokenizer;
 public class Graph {
 	// Store list of vertices in a hash set to prevent duplicates
 	HashSet<Node> vertices;
-
+	//max lat and max lon will be useful for painting the graph later
+	double maxlat;
+	double minlat;
+	double maxlon;
+	double minlon;
 	// constructor
 	public Graph() {
 		vertices = new HashSet<Node>();
+		maxlat = maxlon = Double.MIN_VALUE;
+		minlat = minlon - Double.MAX_VALUE;
 	}
 
 	// construct a graph from a text file
 	public Graph(String filename) {
 		vertices = new HashSet<Node>();
+		maxlat = maxlon = Double.MIN_VALUE;
+		minlat = minlon - Double.MAX_VALUE;
 		try {
 			BufferedReader reader = new BufferedReader(new FileReader(filename));
 			String line;
@@ -51,6 +59,17 @@ public class Graph {
 		// create Node with ID = id; latitude and longitude
 		// add Node to HashSet
 		vertices.add(new Node(id, lat, lon));
+		//keeping track of max and min lat and lon
+		if(lat>maxlat) {
+			maxlat = lat;
+		}else if(lat<minlat) {
+			minlat = lat;
+		}
+		if(lon>maxlon) {
+			maxlon = lon;
+		}else if(lon<minlon) {
+			minlon = lon;
+		}
 	}
 
 	// add edge between node a and node b

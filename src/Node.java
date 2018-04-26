@@ -3,15 +3,15 @@ import java.util.HashSet;
 public class Node implements Comparable<Node> {
 
 	String id;
-	Double lat;
-	Double lon;
+	double lat;
+	double lon;
 	Information info;
 
 	// stores the edges that this node is connected to (undirected graph)
 	HashSet<Edge> edgeList;
 
 	// constructor
-	public Node(String id, Double lat, Double lon) {
+	public Node(String id, double lat, double lon) {
 		this.id = id;
 		this.lat = lat;
 		this.lon = lon;
