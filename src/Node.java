@@ -39,9 +39,11 @@ public class Node implements Comparable<Node> {
 		if (this.info == null || n.info == null) {
 			return 0;
 		}
-		if (this.info.dist >= n.info.dist) {
-			return 1;
-		} else {
+		if (this.info.dist < n.info.dist) {
+			return -1;
+		} else if(this.info.dist == n.info.dist){
+			return 0;
+		}else {
 			return -1;
 		}
 	}
@@ -64,6 +66,15 @@ public class Node implements Comparable<Node> {
 		public void update(Node newprev, Edge workingEdge) {
 			this.prev = newprev;
 			this.dist = newprev.info.dist + workingEdge.weight;
+		}
+		public String toString() {
+			String info;
+			if(prev!=null) {
+				info = prev.toString();
+			}else {
+				info = "noprev";
+			}
+			return  info + " " + dist;
 		}
 	}
 }

@@ -10,7 +10,7 @@ public class Canvas extends JPanel{
 
 	public static void main(String[] args) {
 		Graph g = new Graph("nys.txt");
-		System.out.println("done making file");
+		System.out.println("done making graph");
 		List<Node> n = g.shortestPath("i0", "i23");
 		System.out.println("done finding shortest path");
 		System.out.println(n.toString());

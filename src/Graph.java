@@ -11,11 +11,12 @@ import java.util.StringTokenizer;
 public class Graph {
 	// Store list of vertices in a hash set to prevent duplicates
 	HashMap<String, Node> vertices;
-	//max lat and max lon will be useful for painting the graph later
+	// max lat and max lon will be useful for painting the graph later
 	double maxlat;
 	double minlat;
 	double maxlon;
 	double minlon;
+
 	// constructor
 	public Graph() {
 		vertices = new HashMap<String, Node>();
@@ -60,15 +61,15 @@ public class Graph {
 		// create Node with ID = id; latitude and longitude
 		// add Node to HashSet
 		vertices.put(id, new Node(id, lat, lon));
-		//keeping track of max and min lat and lon
-		if(lat>maxlat) {
+		// keeping track of max and min lat and lon
+		if (lat > maxlat) {
 			maxlat = lat;
-		}else if(lat<minlat) {
+		} else if (lat < minlat) {
 			minlat = lat;
 		}
-		if(lon>maxlon) {
+		if (lon > maxlon) {
 			maxlon = lon;
-		}else if(lon<minlon) {
+		} else if (lon < minlon) {
 			minlon = lon;
 		}
 	}
@@ -102,7 +103,7 @@ public class Graph {
 		// add nodes to queue
 		for (String s : vertices.keySet()) {
 			Node n = vertices.get(s);
-			if (n.id.equals(start)) {
+			if (s.equals(start)) {
 				n.remember(true);
 			} else {
 				n.remember(false);
@@ -125,7 +126,8 @@ public class Graph {
 			for (Edge e : current.edgeList) {
 				if (current.info.dist + e.weight < e.dest.info.dist) {
 					e.dest.info.update(current, e);
-					queue.add(queue.poll());
+					queue.remove(e.dest);
+					queue.add(e.dest);
 				}
 			}
 		}
