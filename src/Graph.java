@@ -17,18 +17,11 @@ public class Graph {
 	double maxlon;
 	double minlon;
 
-	// constructor
-	public Graph() {
-		vertices = new HashMap<String, Node>();
-		maxlat = maxlon = Double.MIN_VALUE;
-		minlat = minlon - Double.MAX_VALUE;
-	}
-
 	// construct a graph from a text file
 	public Graph(String filename) {
 		vertices = new HashMap<String, Node>();
-		maxlat = maxlon = Double.MIN_VALUE;
-		minlat = minlon - Double.MAX_VALUE;
+		maxlat = maxlon = -1 * Double.MAX_VALUE;
+		minlat = minlon = Double.MAX_VALUE;
 		try {
 			BufferedReader reader = new BufferedReader(new FileReader(filename));
 			String line;
