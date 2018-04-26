@@ -126,8 +126,10 @@ public class Graph {
 			for (Edge e : current.edgeList) {
 				if (current.info.dist + e.weight < e.dest.info.dist) {
 					e.dest.info.update(current, e);
-					if(!e.dest.info.visit) {
+					if (!e.dest.info.visit) {
 						e.dest.info.visit();
+						queue.add(e.dest);
+					} else if (queue.remove(e.dest)) {
 						queue.add(e.dest);
 					}
 				}
