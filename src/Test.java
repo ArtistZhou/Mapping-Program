@@ -18,7 +18,7 @@ public class Test {
 		JFrame frame = new JFrame();
 		Canvas can = new Canvas(g);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setSize(500, 500);
+		frame.setSize(500, 600);
 		frame.setResizable(true);
 		frame.add(can);
 		frame.setVisible(true);
