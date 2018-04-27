@@ -14,10 +14,6 @@ public class Test {
 		List<Node> n = g.shortestPath("GOERGEN-ATHLETIC", "CSB");
 		System.out.println("done finding shortest path");
 		System.out.println(n.toString());
-		for (Node node : n) {
-			System.out.println(node.lat + " " + node.lon);
-		}
-		
 		//to draw graph
 		JFrame frame = new JFrame();
 		Canvas can = new Canvas(g);

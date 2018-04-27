@@ -7,14 +7,19 @@ import java.util.List;
 
 public class Canvas extends JPanel {
 	final static double offset = 0.05; //boundary of map
-	static double length;
-	static double width;
+	double length;
+	double width;
 	Graph graph;
+	double scale;
 	
 	//main class has a JFrame that adds this canvas
 	public Canvas(Graph g) {
 		this.graph = g;
-		
+		if(graph.maxlon - graph.minlon > graph.maxlat-graph.minlat) {
+			scale = graph.maxlon - graph.minlon;
+		}else {
+			scale = graph.maxlat-graph.minlat;
+		}
 		repaint();
 	}
 
@@ -25,33 +30,37 @@ public class Canvas extends JPanel {
 	}
 
 	public double generateX(Node n) {
-		return ((n.lon-graph.minlon)/(graph.maxlon - graph.minlon)*width);
+		return ((n.lon-graph.minlon)/scale*width);
 	}	
 
 	public double generateY(Node n) {
-		return (length - (n.lat-graph.minlat)/(graph.maxlat - graph.minlat)*length);
+		return (length - (n.lat-graph.minlat)/scale*length);
 	}
 
 	
 	@Override
 	public void paintComponent(Graphics g) {
 		//aspect ratio = width/height
-		double ratio = (graph.maxlon - graph.minlon)/(graph.maxlat - graph.minlat);
-		int LENGTH = getHeight();
-		int WIDTH = getWidth();
-		double ratio_of_window = WIDTH/LENGTH;
-		
-		if(ratio_of_window != ratio) {
-			if(LENGTH > WIDTH) {
-				width = getWidth();
-				length = ratio*getWidth();
-			} else {
-				length = getHeight();
-				width = ratio*getHeight();
-			}
+//		double ratio = (graph.maxlon - graph.minlon)/(graph.maxlat - graph.minlat);
+//		int LENGTH = getHeight();
+//		int WIDTH = getWidth();
+//		double ratio_of_window = WIDTH/LENGTH;
+//		
+//		if(ratio_of_window != ratio) {
+//			if(LENGTH > WIDTH) {
+//				width = getWidth();
+//				length = ratio*getWidth();
+//			} else {
+//				length = getHeight();
+//				width = ratio*getHeight();
+//			}
+//		}
+		if(getWidth()>getHeight()) {
+			length = width = getHeight();
+		}else {
+			length = width = getWidth();
 		}
 
-		int count = 0;
 		//for each intersection in list of vertices in graph
 		for(String s: graph.vertices.keySet()) {
 			Node node = graph.vertices.get(s);
@@ -63,7 +72,6 @@ public class Canvas extends JPanel {
 				int x2 = (int)generateX(destination);
 				int y2 = (int)generateY(destination);
 				g.drawLine(x1, y1, x2, y2);
-				count ++;
 			}
 		}
 		
