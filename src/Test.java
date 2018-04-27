@@ -7,7 +7,7 @@ public class Test {
 	static double width = 500;
 
 	public static void main(String[] args) {
-		Graph g = new Graph("ur.txt");
+		Graph g = new Graph("nys.txt");
 		System.out.println("done making graph");
 		System.out.println("Latitude ranges from " + g.minlat + " to " + g.maxlat);
 		System.out.println("Longitude ranges from " + g.minlon + " to " + g.maxlon);
@@ -22,7 +22,7 @@ public class Test {
 		JFrame frame = new JFrame();
 		Canvas can = new Canvas(g);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setSize(500, 700);
+		frame.setSize(500, 500);
 		frame.setResizable(true);
 		frame.add(can);
 		frame.setVisible(true);

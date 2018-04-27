@@ -39,12 +39,17 @@ public class Canvas extends JPanel {
 		int LENGTH = getHeight();
 		int WIDTH = getWidth();
 		
-		if(LENGTH < WIDTH) {
-			length = getHeight();
-			width = ratio*getHeight();
+		if(LENGTH/WIDTH != ratio) {
+			if(LENGTH > WIDTH) {
+				length = getHeight();
+				width = ratio*getHeight();
+			} else {
+				width = getWidth();
+				length = ratio*getWidth();
+			}
 		} else {
+			length = getHeight();
 			width = getWidth();
-			length = ratio*getWidth();
 		}
 		
 		
