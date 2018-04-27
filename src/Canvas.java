@@ -36,8 +36,18 @@ public class Canvas extends JPanel {
 	@Override
 	public void paintComponent(Graphics g) {
 		double ratio = (graph.maxlat - graph.minlat)/(graph.maxlon - graph.minlon);
-		length = getHeight();
-		width = getWidth();
+		int LENGTH = getHeight();
+		int WIDTH = getWidth();
+		
+		if(LENGTH < WIDTH) {
+			length = getHeight();
+			width = ratio*getHeight();
+		} else {
+			width = getWidth();
+			length = ratio*getWidth();
+		}
+		
+		
 		int count = 0;
 		
 		//for each intersection in list of vertices in graph
