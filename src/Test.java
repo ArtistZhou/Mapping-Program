@@ -7,7 +7,7 @@ public class Test {
 	static double width = 500;
 
 	public static void main(String[] args) {
-		Graph g = new Graph("nys.txt");
+		Graph g = new Graph("ur.txt");
 		System.out.println("done making graph");
 		System.out.println("Latitude ranges from " + g.minlat + " to " + g.maxlat);
 		System.out.println("Longitude ranges from " + g.minlon + " to " + g.maxlon);
