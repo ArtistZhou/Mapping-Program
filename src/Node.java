@@ -30,13 +30,16 @@ public class Node implements Comparable<Node> {
 		this.info = null;
 	}
 	
-	static public double pathlength(List<Node> list) {
+	static public double pathLength(List<Node> list) {
 		double returnnum = 0;
 		for(int i = 0; i<list.size()-1; i++) {
 			for(Edge edge: list.get(i).edgeList) {
 				if(edge.dest.equals(list.get(i+1))) {
 					returnnum += edge.weight;
 					break;
+				}else {
+					System.out.println("shortest path messed up");
+					return 0;
 				}
 			}
 		}
