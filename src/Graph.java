@@ -155,7 +155,7 @@ public class Graph {
 		System.out.println("Longitude ranges from " + g.minlon + " to " + g.maxlon);
 		List<Node> list = g.shortestPath("RUSH-RHEES", "LOVEJOY");
 		System.out.println("done finding shortest path");
-		System.out.println(Node.pathlength(list));
+		System.out.println(Node.pathLength(list));
 	}
    
 }
