@@ -1,4 +1,7 @@
-
+/* AUTHORS
+ * Shagun Bose . 118
+ * Akira Ranjan Sah . 06
+ */
 public class Edge {
 	String id;
 	double weight;

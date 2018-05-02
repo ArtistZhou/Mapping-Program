@@ -1,3 +1,8 @@
+/* AUTHORS
+ * Shagun Bose . 118
+ * Akira Ranjan Sah . 06
+ */
+
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -105,11 +110,11 @@ public class Graph {
 		}
 		// handle cases when nodes aren't on the graph
 		if (startnode == null) {
-			System.out.println("shortestPath: " + start + " does not exist on the graph");
+			System.out.println("shortestPath: '" + start + "' does not exist on the graph");
 			return returnlist;
 		}
 		if (endnode == null) {
-			System.out.println("shortestPath: "+ end + " does not exist on the graph");
+			System.out.println("shortestPath: '"+ end + "' does not exist on the graph");
 			return returnlist;
 		}
 		// iterate through all nodes from closest to farthest, and update info of each
@@ -148,15 +153,6 @@ public class Graph {
 			vertices.get(s).forget();
 		}
 		return returnlist;
-	}
-	public static void main(String[] args) {
-		Graph g = new Graph("ur.txt");
-		System.out.println("done making graph");
-		System.out.println("Latitude ranges from " + g.minlat + " to " + g.maxlat);
-		System.out.println("Longitude ranges from " + g.minlon + " to " + g.maxlon);
-		List<Node> list = g.shortestPath("RUSH-RHEES", "LOVEJOY");
-		System.out.println("done finding shortest path");
-		System.out.println(Node.pathLength(list) + "miles");
 	}
    
 }

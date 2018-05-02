@@ -1,4 +1,7 @@
-
+/* AUTHORS
+ * Shagun Bose . 118
+ * Akira Ranjan Sah . 06
+ */
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JPanel;

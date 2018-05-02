@@ -1,3 +1,7 @@
+/* AUTHORS
+ * Shagun Bose . 118
+ * Akira Ranjan Sah . 06
+ */
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -5,7 +9,7 @@ import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 
-public class Test {
+public class StreetMap {
 	static double length = 500;
 	static double width = 500;
 
