@@ -116,7 +116,8 @@ public class Canvas extends JPanel {
 			for (Node destination : node.adjlist.keySet()) {
 				int x2 = (int) generateX(destination);
 				int y2 = (int) generateY(destination);
-				
+				//there's a better way of doing something like this
+				//look at my pathlength method in Node class -Akira
 				if(sp.containsKey(node) && sp.get(node).equals(destination)) {
 					g2.setColor(Color.BLUE);
 					g2.setStroke(new BasicStroke(5));
