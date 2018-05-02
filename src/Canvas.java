@@ -112,9 +112,12 @@ public class Canvas extends JPanel {
 					
 					if(node == origin) {
 						g2.drawImage(img, x1-8, y1-20, 17, 20, this);
+						g2.drawString(node.id, x1 + 10, y1);
 					}
 					
 					if(destination == this.destination) {
+						g2.drawString(destination.id, x2 + 10, y2);
+						
 						g2.drawImage(img, x2-8, y2-20, 17, 20, this);
 						
 						String full = "" + Node.pathLength(path);
@@ -129,6 +132,8 @@ public class Canvas extends JPanel {
 					g2.setColor(Color.BLACK);
 					g2.setStroke(new BasicStroke(1));
 					g2.drawLine(x1, y1, x2, y2);
+					
+					
 				}
 
 			}
