@@ -20,20 +20,24 @@ import java.util.List;
 import java.util.Queue;
 
 public class Canvas extends JPanel {
-	final static double offset = 0.05; // boundary of map
-	double length;
+	double length; //length and width of panel 
 	double width;
 	
-	Graph graph;
+	Graph graph; //graph that will be represented as a map
+	
+	//variables used to Draw Shortest Path
 	Node origin;
 	Node destination;
-	
-	Boolean show;
-	
-	HashMap<Node, Node> sp = new HashMap<Node, Node>();
+	HashMap<Node, Node> sp = new HashMap<Node, Node>(); 
 	List<Node> path;
+	
+	//boolean used to ensure that the path is only drawn when needed
+	Boolean show;
 
-	// main class has a JFrame that adds this canvas
+	/* There are two types of Constructors:
+	 * Where only the graph is rendered
+	 * Where the shortest path is also rendered
+	 */
 	public Canvas(Graph g) {
 		this.graph = g;
 		show = false;
@@ -45,6 +49,7 @@ public class Canvas extends JPanel {
 		show = true;
 		path = l;
 		
+		//this takes the nodes and adds them to a queue and then creates pairs of edges which is added to a hashMap to keep track. 
 		Queue<Node> nodes = new LinkedList<Node>();
 		nodes.addAll(l);
 		while(nodes.size() != 1) {
@@ -58,12 +63,8 @@ public class Canvas extends JPanel {
 		
 		repaint();
 	}
-	
-	public void scaleRatio() {
-		
-	}
 
-	//adding padding
+	//generates x and y coordinates based on the given latitude and longitude
 	public double generateX(Node n) {
 		double padding = 0.0;
 		if(getWidth() > getHeight()) {
@@ -81,11 +82,13 @@ public class Canvas extends JPanel {
 		return (length - (n.lat-graph.minlat)/(graph.maxlat - graph.minlat)*length)+ padding;
 	}
 
+	//renders the map
 	@Override
 	public void paintComponent(Graphics g) {
 		length = getHeight();
 		width = getWidth();
 		
+		//to ensure the aspect ratio is maintained you take the bigger side and adjust the smaller side to the ratio, accordingly
 		Graphics2D g2 = (Graphics2D) g;
 		if (getWidth() > getHeight()) {
 			length = width = getHeight();
@@ -93,6 +96,7 @@ public class Canvas extends JPanel {
 			length = width = getWidth();
 		}
 		
+		//image of the pointer
 		BufferedImage img = null;
 		try {
 			img = ImageIO.read(new File("map.png"));
@@ -103,12 +107,12 @@ public class Canvas extends JPanel {
 			Node node = graph.vertices.get(s);
 			int x1 = (int) generateX(node);
 			int y1 = (int) generateY(node);
-
+			//draw the edge connecting it to it's neighbours
 			for (Node destination : node.adjlist.keySet()) {
 				int x2 = (int) generateX(destination);
 				int y2 = (int) generateY(destination);
 
-				//only if the user wants to calculate the path will this show
+				//if the user wants to see the shortest path, do this
 				if(show && sp.containsKey(node) && sp.get(node).equals(destination)) {
 					g2.setColor(Color.BLUE);
 					g2.setStroke(new BasicStroke(5));
@@ -130,7 +134,7 @@ public class Canvas extends JPanel {
 						g2.setColor(Color.WHITE);
 						g2.drawString(pathlen, x2 -28, y2 + 17);
 					}
-					
+				//else  simply draw map	
 				} else {
 					g2.setColor(Color.BLACK);
 					g2.setStroke(new BasicStroke(1));

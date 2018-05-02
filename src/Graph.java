@@ -16,7 +16,8 @@ import java.util.StringTokenizer;
 public class Graph {
 	// Store list of vertices in a hash set to prevent duplicates
 	HashMap<String, Node> vertices;
-	// max lat and max lon will be useful for painting the graph later
+	
+	// These will be useful for painting the graph
 	double maxlat;
 	double minlat;
 	double maxlon;
