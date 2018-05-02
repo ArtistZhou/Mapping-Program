@@ -81,8 +81,8 @@ public class Graph {
 			return;
 		}
 		// create edges on both nodes and add them to each edgeList
-		anode.edgeList.add(new Edge(id, anode, bnode));
-		bnode.edgeList.add(new Edge(id, bnode, anode));
+		anode.adjlist.put(bnode, new Edge(id, anode, bnode));
+		bnode.adjlist.put(anode, new Edge(id, bnode, anode));
 		// test distance calculating method
 	}
 
@@ -117,15 +117,16 @@ public class Graph {
 		while (!queue.isEmpty()) {
 			Node current = queue.poll();
 			current.info.visited();
-			for (Edge e : current.edgeList) {
-				if (current.info.dist + e.weight < e.dest.info.dist) {
-					e.dest.info.update(current, e);
-					if (!e.dest.info.willvisit) {
-						e.dest.info.willvisit();
-						queue.add(e.dest);
-					} else if (!e.dest.info.visited) {
-						if(queue.remove(e.dest)) {
-							queue.add(e.dest);
+			for (Node adj : current.adjlist.keySet()) {
+				Edge e = current.adjlist.get(adj);
+				if (current.info.dist + e.weight < adj.info.dist) {
+					adj.info.update(current, e);
+					if (!adj.info.willvisit) {
+						adj.info.willvisit();
+						queue.add(adj);
+					} else if (!adj.info.visited) {
+						if(queue.remove(adj)) {
+							queue.add(adj);
 						}
 					}
 				}
@@ -155,7 +156,7 @@ public class Graph {
 		System.out.println("Longitude ranges from " + g.minlon + " to " + g.maxlon);
 		List<Node> list = g.shortestPath("RUSH-RHEES", "LOVEJOY");
 		System.out.println("done finding shortest path");
-		System.out.println(Node.pathLength(list));
+		System.out.println(Node.pathLength(list) + "miles");
 	}
    
 }

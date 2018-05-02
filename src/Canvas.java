@@ -113,8 +113,7 @@ public class Canvas extends JPanel {
 			int x1 = (int) generateX(node);
 			int y1 = (int) generateY(node);
 
-			for (Edge adj : node.edgeList) {
-				Node destination = adj.dest;
+			for (Node destination : node.adjlist.keySet()) {
 				int x2 = (int) generateX(destination);
 				int y2 = (int) generateY(destination);
 				

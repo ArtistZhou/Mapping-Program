@@ -1,3 +1,4 @@
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 
@@ -9,7 +10,7 @@ public class Node implements Comparable<Node> {
 	Information info;
 
 	// stores the edges that this node is connected to (undirected graph)
-	HashSet<Edge> edgeList;
+	HashMap<Node, Edge> adjlist;
 
 	// constructor
 	public Node(String id, double lat, double lon) {
@@ -17,7 +18,7 @@ public class Node implements Comparable<Node> {
 		this.lat = lat;
 		this.lon = lon;
 		this.info = null;
-		edgeList = new HashSet<Edge>();
+		adjlist = new HashMap<Node, Edge>();
 	}
 	
 	//creates new instance of info
@@ -33,14 +34,10 @@ public class Node implements Comparable<Node> {
 	static public double pathLength(List<Node> list) {
 		double returnnum = 0;
 		for(int i = 0; i<list.size()-1; i++) {
-			for(Edge edge: list.get(i).edgeList) {
-				if(edge.dest.equals(list.get(i+1))) {
-					returnnum += edge.weight;
-					break;
-				}else {
-					System.out.println("pathLength: shortest path messed up. Nodes are disconnected. :(");
-					return 0;
-				}
+			try {
+				returnnum+=list.get(i).adjlist.get(list.get(i+1)).weight;
+			}catch(NullPointerException e){
+				System.out.println("pathLength: shortest path messed up. Nodes are disconnected. :(");
 			}
 		}
 		return returnnum;
