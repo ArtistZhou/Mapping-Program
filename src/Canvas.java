@@ -15,13 +15,17 @@ public class Canvas extends JPanel {
 	// main class has a JFrame that adds this canvas
 	public Canvas(Graph g) {
 		this.graph = g;
+		double widthRatio = graph.maxlon - graph.minlon;
+		double heightRatio = graph.maxlat - graph.minlat;
+		
 		// the idea is that I am using one scale for both x and y such that neither x
 		// nor y exceeds length or width
-		if (graph.maxlon - graph.minlon > graph.maxlat - graph.minlat) {
-			scale = graph.maxlon - graph.minlon;
+		if (widthRatio > heightRatio) {
+			scale = widthRatio;
 		} else {
-			scale = graph.maxlat - graph.minlat;
+			scale = heightRatio;
 		}
+		
 		if (getWidth() > getHeight()) {
 			length = width = getHeight();
 		} else {
@@ -30,15 +34,9 @@ public class Canvas extends JPanel {
 		repaint();
 	}
 
-	// draw the map
-	public void show() {
-		repaint();
-		// if the shortest path is known, show that too
-	}
-
 	// added some math to center the map on the canvas
 	public double generateX(Node n) {
-		double realx = (n.lon - graph.minlon) / scale * width;
+		double realx = (n.lon - graph.minlon)/scale*width;
 		if (getWidth() > getHeight()) {
 			return (realx + (double) (getWidth() - getHeight()) / 2);
 		}
@@ -57,12 +55,8 @@ public class Canvas extends JPanel {
 	public void paintComponent(Graphics g) {
 		if (getWidth() > getHeight()) {
 			length = width = getHeight();
-			g.drawLine((getWidth() - getHeight()) / 2, 0, (getWidth() - getHeight())/2, getHeight());
-			g.drawLine(getWidth()-(getWidth() - getHeight()) / 2, 0, getWidth()-(getWidth() - getHeight())/2, getHeight());
 		} else {
 			length = width = getWidth();
-			g.drawLine(0, (getHeight() - getWidth()) / 2, getWidth(), (getHeight() - getWidth()) / 2);
-			g.drawLine(0, getHeight()-(getHeight() - getWidth()) / 2, getWidth(), getHeight() - (getHeight() - getWidth()) / 2);
 		}
 
 		// for each intersection in list of vertices in graph
@@ -75,6 +69,7 @@ public class Canvas extends JPanel {
 				Node destination = adj.dest;
 				int x2 = (int) generateX(destination);
 				int y2 = (int) generateY(destination);
+				
 				g.drawLine(x1, y1, x2, y2);
 			}
 		}
