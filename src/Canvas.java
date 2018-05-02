@@ -20,51 +20,20 @@ public class Canvas extends JPanel {
 	final static double offset = 0.05; // boundary of map
 	double length;
 	double width;
+	
 	Graph graph;
-	double scale;
+	
 	HashMap<Node, Node> sp = new HashMap<Node, Node>();
 
 	// main class has a JFrame that adds this canvas
 	public Canvas(Graph g) {
 		this.graph = g;
-		double widthRatio = graph.maxlon - graph.minlon;
-		double heightRatio = graph.maxlat - graph.minlat;
-		
-		// the idea is that I am using one scale for both x and y such that neither x
-		// nor y exceeds length or width
-		if (widthRatio > heightRatio) {
-			scale = widthRatio;
-		} else {
-			scale = heightRatio;
-		}
-		
-		if (getWidth() > getHeight()) {
-			length = width = getHeight();
-		} else {
-			length = width = getWidth();
-		}
 		repaint();
 	}
 	
 	public Canvas(Graph g, List<Node> l) {
 		this.graph = g;
-		double widthRatio = graph.maxlon - graph.minlon;
-		double heightRatio = graph.maxlat - graph.minlat;
-		
-		// the idea is that I am using one scale for both x and y such that neither x
-		// nor y exceeds length or width
-		if (widthRatio > heightRatio) {
-			scale = widthRatio;
-		} else {
-			scale = heightRatio;
-		}
-		
-		if (getWidth() > getHeight()) {
-			length = width = getHeight();
-		} else {
-			length = width = getWidth();
-		}
-		
+
 		Queue<Node> nodes = new LinkedList<Node>();
 		nodes.addAll(l);
 		while(nodes.size() != 1) {
@@ -72,29 +41,36 @@ public class Canvas extends JPanel {
 			Node dest = nodes.peek();
 			sp.put(origin, dest);
 		}
-		
 		repaint();
 	}
+	
+	public void scaleRatio() {
+		
+	}
 
-	// added some math to center the map on the canvas
+	//adding padding
 	public double generateX(Node n) {
-		double realx = (n.lon - graph.minlon)/scale*width;
-		if (getWidth() > getHeight()) {
-			return (realx + (double) (getWidth() - getHeight()) / 2);
+		double padding = 0.0;
+		if(getWidth() > getHeight()) {
+			padding = (getWidth() - getHeight())/2;
 		}
-		return realx;
+		
+		return ((n.lon-graph.minlon)/(graph.maxlon - graph.minlon)*width) + padding;
 	}
 
 	public double generateY(Node n) {
-		double realy = (1 - (n.lat-graph.minlat)/scale)*length;
-		if(getHeight()>getWidth()) {
-			return ( realy + (double)(getHeight()-getWidth())/2);
+		double padding = 0.0;
+		if(getHeight() > getWidth()) {
+			padding = (getHeight() - getWidth())/2;
 		}
-		return realy;
+		return (length - (n.lat-graph.minlat)/(graph.maxlat - graph.minlat)*length)+ padding;
 	}
 
 	@Override
 	public void paintComponent(Graphics g) {
+		length = getHeight();
+		width = getWidth();
+		
 		Graphics2D g2 = (Graphics2D) g;
 		if (getWidth() > getHeight()) {
 			length = width = getHeight();
@@ -116,8 +92,7 @@ public class Canvas extends JPanel {
 			for (Node destination : node.adjlist.keySet()) {
 				int x2 = (int) generateX(destination);
 				int y2 = (int) generateY(destination);
-				//there's a better way of doing something like this
-				//look at my pathlength method in Node class -Akira
+				
 				if(sp.containsKey(node) && sp.get(node).equals(destination)) {
 					g2.setColor(Color.BLUE);
 					g2.setStroke(new BasicStroke(5));
@@ -129,9 +104,7 @@ public class Canvas extends JPanel {
 					g2.setStroke(new BasicStroke(1));
 					g2.drawLine(x1, y1, x2, y2);
 				}
-				
-				
-				
+
 			}
 		}
 	}

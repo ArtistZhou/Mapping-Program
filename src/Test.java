@@ -1,14 +1,15 @@
 import java.util.List;
 
 import javax.swing.JFrame;
+import javax.swing.JScrollPane;
 
 public class Test {
 	static double length = 500;
 	static double width = 500;
 
 	public static void main(String[] args) {
-		Graph g = new Graph("nys.txt");
-		List<Node> n = g.shortestPath("i8", "i23642");
+		Graph g = new Graph("monroe.txt");
+		List<Node> n = g.shortestPath("i34", "i278");
 		System.out.println(n.toString());
 		//to draw graph
 		
