@@ -105,11 +105,11 @@ public class Graph {
 		}
 		// handle cases when nodes aren't on the graph
 		if (startnode == null) {
-			System.out.println(start + " does not exist on the graph");
+			System.out.println("shortestPath: " + start + " does not exist on the graph");
 			return returnlist;
 		}
 		if (endnode == null) {
-			System.out.println(end + " does not exist on the graph");
+			System.out.println("shortestPath: "+ end + " does not exist on the graph");
 			return returnlist;
 		}
 		// iterate through all nodes from closest to farthest, and update info of each
