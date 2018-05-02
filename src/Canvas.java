@@ -20,8 +20,12 @@ public class Canvas extends JPanel {
 	final static double offset = 0.05; // boundary of map
 	double length;
 	double width;
+	
 	Graph graph;
-	double scale;
+	
+	double x_scale;
+	double y_scale;
+
 	HashMap<Node, Node> sp = new HashMap<Node, Node>();
 
 	// main class has a JFrame that adds this canvas
@@ -30,19 +34,9 @@ public class Canvas extends JPanel {
 		double widthRatio = graph.maxlon - graph.minlon;
 		double heightRatio = graph.maxlat - graph.minlat;
 		
-		// the idea is that I am using one scale for both x and y such that neither x
-		// nor y exceeds length or width
-		if (widthRatio > heightRatio) {
-			scale = widthRatio;
-		} else {
-			scale = heightRatio;
-		}
+		x_scale = getWidth()/widthRatio;
+		y_scale = getHeight()/heightRatio;
 		
-		if (getWidth() > getHeight()) {
-			length = width = getHeight();
-		} else {
-			length = width = getWidth();
-		}
 		repaint();
 	}
 	
@@ -51,19 +45,8 @@ public class Canvas extends JPanel {
 		double widthRatio = graph.maxlon - graph.minlon;
 		double heightRatio = graph.maxlat - graph.minlat;
 		
-		// the idea is that I am using one scale for both x and y such that neither x
-		// nor y exceeds length or width
-		if (widthRatio > heightRatio) {
-			scale = widthRatio;
-		} else {
-			scale = heightRatio;
-		}
-		
-		if (getWidth() > getHeight()) {
-			length = width = getHeight();
-		} else {
-			length = width = getWidth();
-		}
+		x_scale = getWidth()/widthRatio;
+		y_scale = getHeight()/heightRatio;
 		
 		Queue<Node> nodes = new LinkedList<Node>();
 		nodes.addAll(l);
@@ -78,18 +61,14 @@ public class Canvas extends JPanel {
 
 	// added some math to center the map on the canvas
 	public double generateX(Node n) {
-		double realx = (n.lon - graph.minlon)/scale*width;
-		if (getWidth() > getHeight()) {
-			return (realx + (double) (getWidth() - getHeight()) / 2);
-		}
+		double point = n.lon - graph.minlon;
+		double realx = (point)*5000;
 		return realx;
 	}
 
 	public double generateY(Node n) {
-		double realy = (1 - (n.lat-graph.minlat)/scale)*length;
-		if(getHeight()>getWidth()) {
-			return ( realy + (double)(getHeight()-getWidth())/2);
-		}
+		double point = -(n.lat - graph.minlat);
+		double realy = point*5000;
 		return realy;
 	}
 
