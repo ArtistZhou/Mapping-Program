@@ -104,36 +104,34 @@ public class Canvas extends JPanel {
 			for (Node destination : node.adjlist.keySet()) {
 				int x2 = (int) generateX(destination);
 				int y2 = (int) generateY(destination);
-			
+
+				//only if the user wants to calculate the path will this show
 				if(show && sp.containsKey(node) && sp.get(node).equals(destination)) {
 					g2.setColor(Color.BLUE);
 					g2.setStroke(new BasicStroke(5));
 					g2.drawLine(x1, y1, x2, y2);
 					
+					//I have two pointers to point out the start and finish of the path
 					if(node == origin) {
 						g2.drawImage(img, x1-8, y1-20, 17, 20, this);
-						g2.drawString(node.id, x1 + 10, y1);
 					}
 					
 					if(destination == this.destination) {
-						g2.drawString(destination.id, x2 + 10, y2);
-						
 						g2.drawImage(img, x2-8, y2-20, 17, 20, this);
 						
+						//print distance in miles on map
 						String full = "" + Node.pathLength(path);
 						String pathlen = full.substring(0, 4);
 						g2.setColor(Color.RED);
-						g2.fillRoundRect(x2 - 10, y2 + 5, 30, 15, 5, 5);
+						g2.fillRoundRect(x2 - 30, y2 + 5, 30, 15, 5, 5);
 						g2.setColor(Color.WHITE);
-						g2.drawString(pathlen, x2 -8, y2 + 17);
+						g2.drawString(pathlen, x2 -28, y2 + 17);
 					}
 					
 				} else {
 					g2.setColor(Color.BLACK);
 					g2.setStroke(new BasicStroke(1));
 					g2.drawLine(x1, y1, x2, y2);
-					
-					
 				}
 
 			}
