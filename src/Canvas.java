@@ -22,18 +22,26 @@ public class Canvas extends JPanel {
 	double width;
 	
 	Graph graph;
+	Node origin;
+	Node destination;
+	
+	Boolean show;
 	
 	HashMap<Node, Node> sp = new HashMap<Node, Node>();
+	List<Node> path;
 
 	// main class has a JFrame that adds this canvas
 	public Canvas(Graph g) {
 		this.graph = g;
+		show = false;
 		repaint();
 	}
 	
 	public Canvas(Graph g, List<Node> l) {
 		this.graph = g;
-
+		show = true;
+		path = l;
+		
 		Queue<Node> nodes = new LinkedList<Node>();
 		nodes.addAll(l);
 		while(nodes.size() != 1) {
@@ -41,6 +49,10 @@ public class Canvas extends JPanel {
 			Node dest = nodes.peek();
 			sp.put(origin, dest);
 		}
+		
+		origin = l.get(0);
+		destination = l.get(l.size()-1);
+		
 		repaint();
 	}
 	
@@ -92,13 +104,27 @@ public class Canvas extends JPanel {
 			for (Node destination : node.adjlist.keySet()) {
 				int x2 = (int) generateX(destination);
 				int y2 = (int) generateY(destination);
-				
-				if(sp.containsKey(node) && sp.get(node).equals(destination)) {
+			
+				if(show && sp.containsKey(node) && sp.get(node).equals(destination)) {
 					g2.setColor(Color.BLUE);
 					g2.setStroke(new BasicStroke(5));
 					g2.drawLine(x1, y1, x2, y2);
-					g2.drawImage(img, x1-8, y1-20, 17, 20, this);
-					g2.drawImage(img, x2-8, y2-20, 17, 20, this);
+					
+					if(node == origin) {
+						g2.drawImage(img, x1-8, y1-20, 17, 20, this);
+					}
+					
+					if(destination == this.destination) {
+						g2.drawImage(img, x2-8, y2-20, 17, 20, this);
+						
+						String full = "" + Node.pathLength(path);
+						String pathlen = full.substring(0, 4);
+						g2.setColor(Color.RED);
+						g2.fillRoundRect(x2 - 10, y2 + 5, 30, 15, 5, 5);
+						g2.setColor(Color.WHITE);
+						g2.drawString(pathlen, x2 -8, y2 + 17);
+					}
+					
 				} else {
 					g2.setColor(Color.BLACK);
 					g2.setStroke(new BasicStroke(1));
