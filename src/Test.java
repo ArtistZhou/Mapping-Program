@@ -7,12 +7,14 @@ public class Test {
 	static double width = 500;
 
 	public static void main(String[] args) {
-		Graph g = new Graph("ur.txt");
-		List<Node> n = g.shortestPath("RUSH-RHEES", "DEWEY");
+		Graph g = new Graph("nys.txt");
+		List<Node> n = g.shortestPath("i8", "i23642");
 		System.out.println(n.toString());
 		//to draw graph
+		
+		//to show shortest path too
 		JFrame frame = new JFrame();
-		Canvas can = new Canvas(g);
+		Canvas can = new Canvas(g, n);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setSize(500, 600);
 		frame.setResizable(true);
