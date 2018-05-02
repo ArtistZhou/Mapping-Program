@@ -38,7 +38,7 @@ public class Node implements Comparable<Node> {
 					returnnum += edge.weight;
 					break;
 				}else {
-					System.out.println("shortest path messed up");
+					System.out.println("pathLength: shortest path messed up. Nodes are disconnected. :(");
 					return 0;
 				}
 			}
