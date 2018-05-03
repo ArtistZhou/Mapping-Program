@@ -12,7 +12,6 @@ public class Node implements Comparable<Node> {
 	double lat;
 	double lon;
 	Information info;
-	boolean visited = false;
 
 	// stores the edges that this node is connected to (undirected graph)
 	HashMap<Node, Edge> adjlist;
@@ -24,7 +23,6 @@ public class Node implements Comparable<Node> {
 		this.lon = lon;
 		this.info = null;
 		adjlist = new HashMap<Node, Edge>();
-		visited = false;
 	}
 	
 	//creates new instance of info
