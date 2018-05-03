@@ -15,6 +15,13 @@ StreetMap.java
 Synopsis:
 For this project, we divided the work accordingly. Together we first defined, roughly the base classes: Node, Edge and Graph. Then Akira handled the construction of the graph from the input file, the implementation of Dijkstra's Algorithm to find the shortest path between two arbitrary points, the calculation of the distance in miles of this path and the printing of this path onto the console. Shagun handled the drawing and scaling of the map, the drawing of the shortest path using the path computed, the creation of the main-class to use command line arguments for input and additional graphic features.  
 
+It takes O(|E|) --> O(|V|^2) to draw the map. The algorithm goes as such: 
+For every node in the Graph's list of vertices O(|V|)
+- calculate the x, y coordinates using it's latitude and longitude degrees O(1)
+- for each Node in it's adjacency list, calculate x,y coordinates and draw a line connecting that node with it's neighbors (O(|E|/|V|)
+- if the (node, neighbor) pair are part of the shortest path, draw a thicker blue line instead
+
+
 We used the code for the 'Harversine Formula' found at [https://github.com/jasonwinn/haversine/blob/master/Haversine.java] to calculate the weight of the edges based on their longitude and latitude. This was the only part of the pre-written code we used.
 
 Notable Obstacles:

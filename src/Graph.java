@@ -124,9 +124,12 @@ public class Graph {
 			Node current = queue.poll(); //O(log(V))
 			current.info.visited();
 			for (Node adj : current.adjlist.keySet()) {//O(V)
+<<<<<<< HEAD
 				if(vertices.get(end).info.visited) { //breaks out of the loop when the end node has been visited
 					break;
 				}
+=======
+>>>>>>> 07a572e89d96cef20246753666c4feed0491eef5
 				Edge e = current.adjlist.get(adj);
 				if (current.info.dist + e.weight < adj.info.dist) {
 					adj.info.update(current, e);
