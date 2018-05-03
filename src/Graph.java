@@ -120,19 +120,22 @@ public class Graph {
 		}
 		// iterate through all nodes from closest to farthest, and update info of each
 		// adjacent node if necessary
-		while (!queue.isEmpty()) {
+		while (!queue.isEmpty()) { //O(V)
 			Node current = queue.poll();
 			current.info.visited();
-			for (Node adj : current.adjlist.keySet()) {
+			for (Node adj : current.adjlist.keySet()) {//O(V)
 				Edge e = current.adjlist.get(adj);
 				if (current.info.dist + e.weight < adj.info.dist) {
 					adj.info.update(current, e);
-					if (!adj.info.willvisit) {
-						adj.info.willvisit();
-						queue.add(adj);
-					} else if (!adj.info.visited) {
-						if(queue.remove(adj)) {
+					if(!adj.info.visited) {
+						if (!adj.info.willvisit) {
+							adj.info.willvisit();
 							queue.add(adj);
+						}
+						else {
+							if(queue.remove(adj)) {
+								queue.add(adj);
+							}
 						}
 					}
 				}
