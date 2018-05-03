@@ -21,6 +21,9 @@ For every node in the Graph's list of vertices O(|V|)
 - for each Node in it's adjacency list, calculate x,y coordinates and draw a line connecting that node with it's neighbors (O(|E|/|V|)
 - if the (node, neighbor) pair are part of the shortest path, draw a thicker blue line instead
 
+The worst case runtime of shortest path algorithm is V^2log(V) because:
+-extract the minimum node from the priority queue, O(log(V)), at most V times
+-check all adjacent nodes of the current and update information, O(V)
 
 We used the code for the 'Harversine Formula' found at [https://github.com/jasonwinn/haversine/blob/master/Haversine.java] to calculate the weight of the edges based on their longitude and latitude. This was the only part of the pre-written code we used.
 
@@ -28,7 +31,13 @@ Notable Obstacles:
 - The biggest obstacle for drawing the graph was trying to maintain it's aspect ratio when the window was resized. 
 
 Design Choices:
-- We really tried to focus on making our methods as efficient as possible. For the dijkstra's algorithm, for example, we used a [insert], which did [insert]
+- We really tried to focus on making our methods as efficient as possible. 
+	-For the Dijkstra's algorithm, the norm is to add all nodes into a priority queue sorted by distance from the start node.
+		-Always having all unvisited nodes in the priority queue makes the runtime of Dijkstra's algorithm is inefficient because the cost of 		taking out the minimum element is dependent on the number of nodes in the queue. 
+	-Instead, we opted to only add the start node to the queue at the beginning, and add the adjacent nodes as their distances were updated when visiting the start node. 
+	-So just the nodes that are unvisited and adjacent to visited nodes are in the queue. While the worst case runtime of the algorithm is still V^2log(V), this drastically improved the general runtime of the algorithm because the queue was always as small as possible. 
+	-All other things constant, the change improved the runtime by at least a constant factor of 5 when we tested the algorithms. 
+	-This also means that the algorithm can handle disconnected graphs more efficiently, since nodes that are not connected to the Also, the shortest path algorithm stops iterating through nodes once the end node has been visited.
 - As for drawing the graph, we wrote our function in such a manner that a) the graph maintains it's aspect ration when scaled and b) it remains at the centre of the screen when scaled. 
 - To clearly identify the start and finish points on the graph, we added a small red pointers, that people associate with maps and also draw the distance (in miles) for a more informative map. 
 
