@@ -105,12 +105,10 @@ public class Canvas extends JPanel {
 		// for each intersection in list of vertices in graph
 		for (String s : graph.vertices.keySet()) { //O(|E|) --> O(|V|^2)
 			Node node = graph.vertices.get(s);
-			node.visited = true;
 			int x1 = (int) generateX(node);
 			int y1 = (int) generateY(node);
 			//draw the edge connecting it to it's neighbours
 			for (Node destination : node.adjlist.keySet()) {
-				if(!destination.visited) {
 					int x2 = (int) generateX(destination);
 					int y2 = (int) generateY(destination);
 
@@ -143,7 +141,6 @@ public class Canvas extends JPanel {
 						g2.drawLine(x1, y1, x2, y2);
 					}
 				}
-			}
 		}
 	}
 }

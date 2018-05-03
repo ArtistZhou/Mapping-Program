@@ -8,8 +8,8 @@ public class test {
 	static double width = 500;
 
 	public static void main(String[] args) {
-		Graph g = new Graph("ur.txt");
-		List<Node> n = g.shortestPath("BURTON", "SIMON");
+		Graph g = new Graph("nys.txt");
+		List<Node> n = g.shortestPath("i65", "i234");
 		System.out.println(n.toString());
 		//to draw graph
 		

@@ -123,11 +123,7 @@ public class Graph {
 		while (!queue.isEmpty()) { //O(V)
 			Node current = queue.poll();
 			current.info.visited();
-<<<<<<< HEAD
 			for (Node adj : current.adjlist.keySet()) {//O(V)
-=======
-			for (Node adj : current.adjlist.keySet()) { 
->>>>>>> 09df1fa8ba5da3d98945f51f44678d3fa2a5639e
 				Edge e = current.adjlist.get(adj);
 				if (current.info.dist + e.weight < adj.info.dist) {
 					adj.info.update(current, e);
