@@ -27,7 +27,7 @@ public class StreetMap {
 			String from = args[args.length -2];
 			List<Node> n = g.shortestPath(from, to);
 			System.out.println("Path: " + n.toString());
-			System.out.println("Distance" + Node.pathLength(n) + " Miles");
+			System.out.println("Distance: " + Node.pathLength(n) + " Miles");
 			
 			if(com.contains("--show")) {
 				JFrame frame = new JFrame();
