@@ -43,12 +43,13 @@ The worst case runtime of shortest path algorithm is V^2log(V) because:
 
 notable obstacle/design choices
 - We really tried to focus on making our methods as efficient as possible. 
-	-For the Dijkstra's algorithm, the norm is to add all nodes into a priority queue sorted by distance from the start node.
-		-Always having all unvisited nodes in the priority queue makes the runtime of Dijkstra's algorithm is inefficient because the cost of 		taking out the minimum element is dependent on the number of nodes in the queue. 
-	-Instead, we opted to only add the start node to the queue at the beginning, and add the adjacent nodes as their distances were updated when visiting the start node. 
-	-So just the nodes that are unvisited and adjacent to visited nodes are in the queue. While the worst case runtime of the algorithm is still V^2log(V), this drastically improved the general runtime of the algorithm because the queue was always as small as possible. 
-	-All other things constant, the change improved the runtime by at least a constant factor of 5 when we tested the algorithms. 
-	-This also means that the algorithm can handle disconnected graphs more efficiently, since nodes that are not connected to the Also, the shortest path algorithm stops iterating through nodes once the end node has been visited.
+	- For the Dijkstra's algorithm, the norm is to add all nodes into a priority queue sorted by distance from the start node.
+		- Always having all unvisited nodes in the priority queue makes the runtime of Dijkstra's algorithm is inefficient because the cost of 		taking out the minimum element is dependent on the number of nodes in the queue. 
+	- Instead, we opted to only add the start node to the queue at the beginning, and add the adjacent nodes as their distances were updated when visiting the start node. 
+	- So just the nodes that are unvisited and adjacent to visited nodes are in the queue. While the worst case runtime of the algorithm is still V^2log(V), this drastically improved the general runtime of the algorithm because the queue was always as small as possible. 
+	- All other things constant, the change improved the runtime by at least a constant factor of 5 when we tested the algorithms. 
+	- This also means that the algorithm can handle disconnected graphs more efficiently, since nodes that are not connected to the to the start node will not be processed.
+	- Also, the shortest path algorithm stops iterating through nodes once the end node has been visited.
 
 Note: We used the code for the 'Harversine Formula' found at [https://github.com/jasonwinn/haversine/blob/master/Haversine.java] to calculate the weight of the edges based on their longitude and latitude. This was the only part of the pre-written code we used.
 
