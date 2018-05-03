@@ -103,44 +103,46 @@ public class Canvas extends JPanel {
 		} catch (IOException e) {}
 		
 		// for each intersection in list of vertices in graph
-		for (String s : graph.vertices.keySet()) {
+		for (String s : graph.vertices.keySet()) { //O(|E|) --> O(|V|^2)
 			Node node = graph.vertices.get(s);
+			node.visited = true;
 			int x1 = (int) generateX(node);
 			int y1 = (int) generateY(node);
 			//draw the edge connecting it to it's neighbours
 			for (Node destination : node.adjlist.keySet()) {
-				int x2 = (int) generateX(destination);
-				int y2 = (int) generateY(destination);
+				if(!destination.visited) {
+					int x2 = (int) generateX(destination);
+					int y2 = (int) generateY(destination);
 
-				//if the user wants to see the shortest path, do this
-				if(show && sp.containsKey(node) && sp.get(node).equals(destination)) {
-					g2.setColor(Color.BLUE);
-					g2.setStroke(new BasicStroke(5));
-					g2.drawLine(x1, y1, x2, y2);
-					
-					//I have two pointers to point out the start and finish of the path
-					if(node == origin) {
-						g2.drawImage(img, x1-8, y1-20, 17, 20, this);
-					}
-					
-					if(destination == this.destination) {
-						g2.drawImage(img, x2-8, y2-20, 17, 20, this);
+					//if the user wants to see the shortest path, do this
+					if(show && sp.containsKey(node) && sp.get(node).equals(destination)) {
+						g2.setColor(Color.BLUE);
+						g2.setStroke(new BasicStroke(5));
+						g2.drawLine(x1, y1, x2, y2);
 						
-						//print distance in miles on map
-						String full = "" + Node.pathLength(path);
-						String pathlen = full.substring(0, 4);
-						g2.setColor(Color.RED);
-						g2.fillRoundRect(x2 - 30, y2 + 5, 30, 15, 5, 5);
-						g2.setColor(Color.WHITE);
-						g2.drawString(pathlen, x2 -28, y2 + 17);
+						//I have two pointers to point out the start and finish of the path
+						if(node == origin) {
+							g2.drawImage(img, x1-8, y1-20, 17, 20, this);
+						}
+						
+						if(destination == this.destination) {
+							g2.drawImage(img, x2-8, y2-20, 17, 20, this);
+							
+							//print distance in miles on map
+							String full = "" + Node.pathLength(path);
+							String pathlen = full.substring(0, 4);
+							g2.setColor(Color.RED);
+							g2.fillRoundRect(x2 - 30, y2 + 5, 30, 15, 5, 5);
+							g2.setColor(Color.WHITE);
+							g2.drawString(pathlen, x2 -28, y2 + 17);
+						}
+					//else  simply draw map	
+					} else {
+						g2.setColor(Color.BLACK);
+						g2.setStroke(new BasicStroke(1));
+						g2.drawLine(x1, y1, x2, y2);
 					}
-				//else  simply draw map	
-				} else {
-					g2.setColor(Color.BLACK);
-					g2.setStroke(new BasicStroke(1));
-					g2.drawLine(x1, y1, x2, y2);
 				}
-
 			}
 		}
 	}
