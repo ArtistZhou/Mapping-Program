@@ -19,7 +19,15 @@ It takes O(|E|) --> O(|V|^2) to draw the map. The algorithm goes as such:
 For every node in the Graph's list of vertices O(|V|)
 - calculate the x, y coordinates using it's latitude and longitude degrees O(1)
 - for each Node in it's adjacency list, calculate x,y coordinates and draw a line connecting that node with it's neighbors (O(|E|/|V|)
-- if the (node, neighbor) pair are part of the shortest path, draw a thicker blue line instead
+
+To draw the shortest path the following modifications are made:
+- the canvas takes in the list of nodes, L, returned by shortest path method
+	- add Nodes from L to a Queue, Q
+	- Until Q has only 1 element left, 
+		- Pop element 1 and peek element 2 from Q
+		- add to hashMap<Node, Node> SP as (element 1, element 2)
+	- while drawing the map, if {Node, Destination} pair are part of the shortest path, draw a thicker blue line instead
+	- after drawing, add extra graphic elements: pointers, and print distance (miles)
 
 The worst case runtime of shortest path algorithm is V^2log(V) because:
 -extract the minimum node from the priority queue, O(log(V)), at most V times

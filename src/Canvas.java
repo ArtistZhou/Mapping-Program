@@ -8,6 +8,7 @@ import javax.swing.JPanel;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -27,6 +28,7 @@ public class Canvas extends JPanel {
 	
 	//variables used to Draw Shortest Path
 	Node origin;
+	int ox, oy, dx, dy;
 	Node destination;
 	HashMap<Node, Node> sp = new HashMap<Node, Node>(); 
 	List<Node> path;
@@ -111,29 +113,14 @@ public class Canvas extends JPanel {
 			for (Node destination : node.adjlist.keySet()) {
 					int x2 = (int) generateX(destination);
 					int y2 = (int) generateY(destination);
-
+					if(node == origin) { ox = x1; oy = y1;}
+					if(destination == this.destination) {dx = x2; dy = y2;}
+			
 					//if the user wants to see the shortest path, do this
 					if(show && sp.containsKey(node) && sp.get(node).equals(destination)) {
 						g2.setColor(Color.BLUE);
 						g2.setStroke(new BasicStroke(5));
 						g2.drawLine(x1, y1, x2, y2);
-						
-						//I have two pointers to point out the start and finish of the path
-						if(node == origin) {
-							g2.drawImage(img, x1-8, y1-20, 17, 20, this);
-						}
-						
-						if(destination == this.destination) {
-							g2.drawImage(img, x2-8, y2-20, 17, 20, this);
-							
-							//print distance in miles on map
-							String full = "" + Node.pathLength(path);
-							String pathlen = full.substring(0, 4);
-							g2.setColor(Color.RED);
-							g2.fillRoundRect(x2 - 30, y2 + 5, 30, 15, 5, 5);
-							g2.setColor(Color.WHITE);
-							g2.drawString(pathlen, x2 -28, y2 + 17);
-						}
 					//else  simply draw map	
 					} else {
 						g2.setColor(Color.BLACK);
@@ -142,5 +129,19 @@ public class Canvas extends JPanel {
 					}
 				}
 		}
+		
+		//Additional Graphic - pointers to show where the start and finish are and the distance (miles)
+		if(show) {
+			g2.drawImage(img, ox-8, oy-20, 17, 20, this);
+			g2.drawImage(img, dx-8, dy-20, 17, 20, this);
+			//print distance in miles on map
+			String full = "" + Node.pathLength(path);
+			String pathlen = full.substring(0, 4);
+			g2.setColor(Color.RED);
+			g2.fillRoundRect(dx - 30, dy + 5, 30, 15, 5, 5);
+			g2.setColor(Color.WHITE);
+			g2.drawString(pathlen, dx -28, dy + 17);
+		}
+	
 	}
 }

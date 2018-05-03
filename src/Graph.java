@@ -127,6 +127,10 @@ public class Graph {
 				if(vertices.get(end).info.visited) { //breaks out of the loop when the end node has been visited
 					break;
 				}
+<<<<<<< HEAD
+=======
+
+>>>>>>> e4f4eff46ef3004b2b80e20be4ddc1e4484302c8
 				Edge e = current.adjlist.get(adj);
 				if (current.info.dist + e.weight < adj.info.dist) {
 					adj.info.update(current, e);
