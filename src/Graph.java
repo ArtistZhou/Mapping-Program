@@ -104,7 +104,7 @@ public class Graph {
 			Node n = vertices.get(s);
 			if (s.equals(start)) {
 				n.remember(true);
-				queue.add(n);
+				queue.add(n); //only adds the starting node to the queue
 			} else {
 				n.remember(false);
 			}
@@ -121,24 +121,24 @@ public class Graph {
 		// iterate through all nodes from closest to farthest, and update info of each
 		// adjacent node if necessary
 		while (!queue.isEmpty()) { //O(V)
-			Node current = queue.poll();
+			Node current = queue.poll(); //O(log(V))
 			current.info.visited();
-<<<<<<< HEAD
 			for (Node adj : current.adjlist.keySet()) {//O(V)
-=======
-			for (Node adj : current.adjlist.keySet()) { 
->>>>>>> 09df1fa8ba5da3d98945f51f44678d3fa2a5639e
+				if(vertices.get(end).info.visited) { //breaks out of the loop when the end node has been visited
+					break;
+				}
 				Edge e = current.adjlist.get(adj);
 				if (current.info.dist + e.weight < adj.info.dist) {
 					adj.info.update(current, e);
 					if(!adj.info.visited) {
 						if (!adj.info.willvisit) {
 							adj.info.willvisit();
-							queue.add(adj);
+							queue.add(adj); // the idea is to keep the queue as small as possible
+							//by only adding nodes that are adjacent to the node that is being visited
 						}
 						else {
-							if(queue.remove(adj)) {
-								queue.add(adj);
+							if(queue.remove(adj)) { //this is a node that haven't been visited yet but is on the queue.
+								queue.add(adj); //since the distance was changed, it must be removed and added back
 							}
 						}
 					}
