@@ -100,7 +100,7 @@ public class Graph {
 		LinkedList<Node> returnlist = new LinkedList<Node>();
 		// iterate through vertices looking for corresponding nodes, update info, and
 		// add nodes to queue
-		for (String s : vertices.keySet()) {
+		for (String s : vertices.keySet()) { //O(|V|)
 			Node n = vertices.get(s);
 			if (s.equals(start)) {
 				n.remember(true);
@@ -123,7 +123,11 @@ public class Graph {
 		while (!queue.isEmpty()) { //O(V)
 			Node current = queue.poll();
 			current.info.visited();
+<<<<<<< HEAD
 			for (Node adj : current.adjlist.keySet()) {//O(V)
+=======
+			for (Node adj : current.adjlist.keySet()) { 
+>>>>>>> 09df1fa8ba5da3d98945f51f44678d3fa2a5639e
 				Edge e = current.adjlist.get(adj);
 				if (current.info.dist + e.weight < adj.info.dist) {
 					adj.info.update(current, e);
@@ -141,6 +145,7 @@ public class Graph {
 				}
 			}
 		}
+		
 		if (endnode.info.dist == Double.MAX_VALUE) {
 			// clause for the case that b is not connected to a
 			System.out.println(start + " is not connected to " + end);
