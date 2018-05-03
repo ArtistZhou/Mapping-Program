@@ -1,5 +1,4 @@
 
-@@ -1,3 +1,5 @@
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -22,10 +21,6 @@ public class test {
 		frame.setResizable(true);
 		frame.add(can);
 		frame.setVisible(true);
-		ArrayList<String> com = new ArrayList<String>();
-		for(String s: args) {
-			com.add(s);
-		}
 		
 		//to show just the map
 //		JFrame frame2 = new JFrame();
