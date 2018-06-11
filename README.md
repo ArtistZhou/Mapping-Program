@@ -53,7 +53,7 @@ notable obstacle/design choices
 
 Note: We used the code for the 'Harversine Formula' found at [https://github.com/jasonwinn/haversine/blob/master/Haversine.java] to calculate the weight of the edges based on their longitude and latitude. This was the only part of the pre-written code we used.
 
-Extra-Credit Features: 
+Extra Features: 
 - We have added extra graphics to the map to make it more informational (pointer and printing distance)
 - We have also ensured that the map is always centred (for a better user experience)
 - We have improved upon the shortest path algorithm to make it more efficient.
